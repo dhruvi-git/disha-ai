@@ -1,0 +1,98 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Deep dark background */
+    --background: 240 10% 4%; 
+    --foreground: 0 0% 98%;
+    
+    /* Translucent dark cards for Glassmorphism */
+    --card: 240 10% 6%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 6%;
+    --popover-foreground: 0 0% 98%;
+    
+    /* Neon Purple Primary */
+    --primary: 270 100% 60%; 
+    --primary-foreground: 0 0% 100%;
+    
+    /* Darker purple for secondary elements */
+    --secondary: 270 40% 15%; 
+    --secondary-foreground: 270 100% 80%;
+    
+    --muted: 240 10% 12%;
+    --muted-foreground: 240 5% 65%;
+    
+    --accent: 270 50% 15%;
+    --accent-foreground: 270 100% 80%;
+    
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    
+    /* Subtle purple borders */
+    --border: 270 30% 15%; 
+    --input: 240 10% 12%;
+    --ring: 270 100% 60%;
+    --radius: 1rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground overflow-x-hidden;
+  }
+}
+
+@layer utilities {
+  .gradient-title {
+    @apply font-extrabold tracking-tight text-transparent bg-clip-text pb-2;
+    background-image: linear-gradient(to right, #ffffff, #c084fc, #9333ea);
+  }
+  
+  .glass-card {
+    @apply bg-white/[0.02] backdrop-blur-xl border border-white/[0.05] shadow-[0_4px_30px_rgba(0,0,0,0.1)];
+  }
+}
+
+/* Updated Subtle Dark Grid */
+.grid-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, rgba(147, 51, 234, 0.05) 1px, transparent 1px),
+              linear-gradient(to bottom, rgba(147, 51, 234, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.grid-background::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, transparent 0%, #0a0a0c 80%);
+}
+
+/* Image Hover effects */
+.hero-image-wrapper {
+  perspective: 1000px;
+}
+.hero-image {
+  transform: rotateX(10deg) scale(0.95);
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.7s ease;
+  will-change: transform;
+}
+.hero-image.scrolled {
+  transform: rotateX(0deg) scale(1);
+  box-shadow: 0 0 60px -15px rgba(147, 51, 234, 0.5);
+}
