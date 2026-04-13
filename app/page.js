@@ -60,24 +60,24 @@ export default function LandingPage() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto"
+            className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 max-w-[90rem] mx-auto px-4"
           >
             {features.map((feature, index) => {
               const FeatureIcon = feature.icon;
 
               return (
-                <motion.div key={index} variants={itemVariants}>
+                <motion.div key={index} variants={itemVariants} className="h-full">
                   <Card
-                    className="glass-card bg-slate-900/50 border-white/5 hover:border-purple-500/50 transition-all duration-500 group overflow-hidden relative h-full"
+                    className="glass-card bg-slate-900/50 border-white/5 hover:border-purple-500/50 transition-all duration-500 group overflow-hidden relative h-full flex flex-col hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(147,51,234,0.15)]"
                   >
                     <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
-                    <CardContent className="pt-8 text-left relative z-10">
-                      <div className="mb-6 w-12 h-12 rounded-xl bg-purple-500/20 flex items-center justify-center text-purple-400 border border-purple-500/30 shadow-[0_0_15px_rgba(147,51,234,0.2)]">
-                        <FeatureIcon className="h-6 w-6" />
+                    <CardContent className="pt-6 px-5 pb-6 text-left relative z-10 flex-1 flex flex-col">
+                      <div className="mb-4 w-10 h-10 rounded-xl bg-purple-500/20 flex items-center justify-center text-purple-400 border border-purple-500/30 shadow-[0_0_15px_rgba(147,51,234,0.2)] group-hover:scale-110 transition-transform duration-300">
+                        <FeatureIcon className="h-5 w-5" />
                       </div>
-                      <h3 className="text-xl font-semibold mb-3 text-white group-hover:text-purple-300 transition-colors">{feature.title}</h3>
-                      <p className="text-gray-400 text-sm leading-relaxed">
+                      <h3 className="text-lg font-semibold mb-2 text-white group-hover:text-purple-300 transition-colors">{feature.title}</h3>
+                      <p className="text-gray-400 text-xs sm:text-sm leading-relaxed flex-1">
                         {feature.description}
                       </p>
                     </CardContent>
