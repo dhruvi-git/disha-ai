@@ -83,8 +83,20 @@ const DashboardView = ({ insights }) => {
       {/* App Features Quick Links */}
       <div className="mb-8">
         <h2 className="text-2xl font-bold tracking-tight mb-4">Your AI Career Coach Toolkit</h2>
-        <p className="text-muted-foreground mb-6">Explore the tailored tools designed to secure your competitive edge in the evolving job market.</p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <p className="text-muted-foreground mb-6">Explore the full suite of intelligent tools designed to accelerate your growth and secure your competitive edge.</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <Card className="hover:border-purple-500/50 transition-colors">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-lg">Chat with Disha</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground mb-4">Get personalized career guidance and strategic advice from your AI coach.</p>
+              <Link href="/chat">
+                <Button variant="outline" className="w-full">Start Chatting</Button>
+              </Link>
+            </CardContent>
+          </Card>
+
           <Card className="hover:border-purple-500/50 transition-colors">
             <CardHeader className="pb-2">
               <CardTitle className="text-lg">AI Resume Tailor</CardTitle>
@@ -99,7 +111,7 @@ const DashboardView = ({ insights }) => {
           
           <Card className="hover:border-purple-500/50 transition-colors">
             <CardHeader className="pb-2">
-              <CardTitle className="text-lg">Cover Letter Generator</CardTitle>
+              <CardTitle className="text-lg">Smart Cover Letters</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground mb-4">Instantly draft personalized cover letters highlighting your exact strengths.</p>
@@ -111,10 +123,10 @@ const DashboardView = ({ insights }) => {
 
           <Card className="hover:border-purple-500/50 transition-colors">
             <CardHeader className="pb-2">
-              <CardTitle className="text-lg">AI Mock Interviews</CardTitle>
+              <CardTitle className="text-lg">Mock Interviews</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-muted-foreground mb-4">Practice with dynamic, industry-specific questions grading your responses.</p>
+              <p className="text-sm text-muted-foreground mb-4">Prep with dynamic scenarios and track your progress to guarantee readiness.</p>
               <Link href="/interview">
                 <Button variant="outline" className="w-full">Start Practice</Button>
               </Link>

@@ -2,12 +2,12 @@ export const faqs = [
   {
     question: "What makes Disha AI unique as a career development tool?",
     answer:
-      "Disha AI combines AI-powered career tools with industry-specific insights to help you advance your career. Our platform offers three main features: an intelligent resume builder, a cover letter generator, and an adaptive interview preparation system. Each tool is tailored to your industry and skills, providing personalized guidance for your professional journey.",
+      "Disha AI is an all-in-one career acceleration platform providing five distinct, cutting-edge tools: a conversational 'Chat with Disha' assistant, an AI Resume Tailor to dynamically rebuild your resume against target jobs, a Cover Letter generator, an adaptive Mock Interview and tracking system, and a real-time Industry Insights dashboard. Every feature analyzes your unique career profile to provide personalized guidance.",
   },
   {
-    question: "How does Disha AI create tailored content?",
+    question: "How does the AI Resume Tailor actually work?",
     answer:
-      "Disha AI learns about your industry, experience, and skills during onboarding. It then uses this information to generate customized resumes, cover letters, and interview questions. The content is specifically aligned with your professional background and industry standards, making it highly relevant and effective.",
+      "Instead of a basic template builder, the AI Resume Tailor allows you to input an existing resume and a target Job Description. Our AI automatically analyzes the gaps, highlights your matching skills, and completely rewrites your bullet points to achieve high ATS (Applicant Tracking System) scores specifically for that role.",
   },
   {
     question: "How accurate and up-to-date are Disha AI's industry insights?",
