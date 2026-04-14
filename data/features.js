@@ -8,8 +8,8 @@ export const features = [
   },
   {
     icon: ScrollText,
-    title: "AI Resume & Tailoring",
-    description: "Build an ATS-optimized resume from scratch, or use our AI Tailor feature to dynamically rebuild your existing resume against specific job descriptions.",
+    title: "AI Resume Builder",
+    description: "Build an ATS-optimized resume from scratch, or use our AI Tailor feature to dynamically rebuild your resume.",
   },
   {
     icon: Mail,
