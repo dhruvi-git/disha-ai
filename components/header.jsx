@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "./ui/button";
+import { Button, buttonVariants } from "./ui/button";
 import {
   PenBox,
   LayoutDashboard,
@@ -60,12 +60,12 @@ export default async function Header() {
 
             {/* Growth Tools Dropdown */}
             <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button className="flex items-center gap-2 border-white/10 hover:bg-white/5 text-white" variant="outline">
+              <DropdownMenuTrigger 
+                className={buttonVariants({ variant: "outline", className: "flex items-center gap-2 border-white/10 hover:bg-white/5 text-white cursor-pointer" })}
+              >
                   <StarsIcon className="h-4 w-4" />
                   <span className="hidden md:block">Growth Tools</span>
                   <ChevronDown className="h-4 w-4" />
-                </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-48 bg-slate-950 border-white/10 text-white">
                 <DropdownMenuItem asChild className="hover:bg-purple-500/20 focus:bg-purple-500/20 cursor-pointer">
