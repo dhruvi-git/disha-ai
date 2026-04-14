@@ -30,7 +30,7 @@ export default function ChatWidget() {
           size="icon"
           className="h-14 w-14 rounded-full bg-indigo-600 hover:bg-purple-600 text-white shadow-[0_0_20px_rgba(99,102,241,0.4)] hover:shadow-[0_0_30px_rgba(147,51,234,0.6)] transition-all duration-300 hover:-translate-y-1"
         >
-          <BotMessageSquare className="h-6 w-6 animate-pulse" />
+          <BotMessageSquare className="h-8 w-8 animate-pulse" />
         </Button>
       </Link>
     </motion.div>
