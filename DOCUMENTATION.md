@@ -6,18 +6,19 @@
 **Project Domain:** AI, Web Dev  
 
 **Short Description:**  
-Disha AI is a comprehensive Full-Stack AI-powered career coach designed to help professionals logically optimize their resumes, rigorously prepare for mock interviews, and dynamically explore real-time industry insights. It strategically uses advanced LLMs (via Vercel AI SDK and Groq) coupled with background workload processors (Inngest) to deliver seamless, actionable advice to users.
+Disha AI is a comprehensive Full-Stack AI-powered career coach designed to help students as well as professionals logically optimize their resumes, rigorously prepare for mock interviews, and dynamically explore real-time industry insights. It strategically uses advanced LLMs (via the Groq API) coupled with background workload processors (Inngest) to deliver extremely fast, real-time responses, seamlessly integrated, actionable advice to users.
 
 **Problem Statement:**  
 Modern job seekers face an overwhelmingly convoluted array of career choices, heavily compounded by generic guidance systems that fail to account for unique technical aptitudes and aggressively shifting job markets. Traditional programmatic career counselors struggle to keep pace with micro-skills required in the modern tech landscape. This gap creates a critical need for a dynamic, highly personalized, low-latency advisory execution tool.
 
 **Objectives:**  
-Leverage advanced Generative AI and event-driven background processing to design an innovative solution acting as a hyper-personalized career and skills advisor. The platform must circumvent generic advice by mathematically aligning a user's bespoke profile to relevant market benchmarks, offering detailed remediation and interview validation natively on the web.
+Leverage advanced Generative AI and event-driven background processing to design an innovative solution acting as a hyper-personalized career and skills advisor. The platform must circumvent generic advice by mathematically aligning a user's bespoke profile to relevant market benchmarks, offering detailed remediation, interview validation, and direct chatbot assistance natively on the web.
 
 **Key Features:**  
 - **Industry Insights Dashboard:** Generates robust, asynchronous, real-time data on salary bands, high-demand skills, and market mobility within specific industries using Inngest background jobs.
-- **AI Resume Builder:** Empowers users to architect, save, and iterate upon ATS-compliant resumes with AI quantifying their professional impact.
-- **Mock Interviews:** Dynamically constructs adaptive multiple-choice quizzes encompassing technical/behavioral domains based exactly on user competency.
+- **AI Resume Tailor & Builder:** Upload a resume along with a target job description to instantly receive an ATS score, personalized refinement recommendations, and an AI-tailored resume uniquely aligned to the job description.
+- **Interview Progress & Analytics Dashboard:** Dynamically constructs adaptive multiple-choice quizzes encompassing technical/behavioral domains based exactly on user competency. Users track their progress, question accuracy, and history in a visually rich analytical dashboard.
+- **Personalized Disha Chatbot:** A built-in, 1-on-1 virtual assistant that offers tailored advice. Users can discuss their career roadmap, interview strategy, or general profession queries, and receive context-aware responses based on their skills and background.
 - **Smart Cover Letter Generator:** Synthesizes context-aware cover letters mapping background experience to JD prerequisites instantly.
 
 ---
@@ -39,7 +40,7 @@ Candidates traditionally rely on collegiate placement cells, non-specific intern
 3. **Impersonal Feedback:** Rubric-based assessments fail to explain *why* an interview answer was poor.
 
 **Proposed Solution:**  
-Disha AI implements an event-driven AI architecture. It offers a continuous feedback loop: assessing a user's skills via mock interviews, formatting their experiences into high-impact resumes, and orchestrating extensive industry analysis workflows silently in the background (using Inngest), maintaining a snappy, uninterrupted user experience.
+Disha AI implements an event-driven AI architecture. It offers a continuous feedback loop: assessing a user's skills via mock interviews, formatting their experiences into tailored resumes, answering ongoing questions via the chatbot, and orchestrating extensive industry analysis workflows silently in the background (using Inngest).
 
 ---
 
@@ -47,28 +48,28 @@ Disha AI implements an event-driven AI architecture. It offers a continuous feed
 
 **Project Objectives:**  
 - Synthesize an integrated platform aligning student capabilities to real-world market demands via LLM evaluation.
-- Construct native document builders explicitly targeting ATS compliance.
-- Architect an automated, stress-tested interviewing loop generating deterministic feedback over non-deterministic LLM pipelines.
+- Construct native document builders explicitly targeting ATS compliance and job-tailoring.
+- Architect an automated, stress-tested interviewing loop generating deterministic feedback with visual analytics.
 
 **Scope of the Project:**  
-Focuses prominently on college students and early-stage professionals aiming for software engineering, data science, digital marketing, and UI/UX disciplines.
+Focuses prominently on college students and professionals aiming for software engineering, data science, digital marketing, and UI/UX disciplines, but scales universally across industries.
 
 **Applications / Use Cases:**  
-- A backend engineering aspirant utilizing the Mock Interview module to drill system design paradigms.
-- A career switcher generating tailored Cover Letters dynamically mapped to individual startup job descriptions.
+- A backend engineering aspirant utilizing the Mock Interview module to drill system design paradigms, and tracking their accuracy over time.
+- A career switcher navigating to a new role by chatting with the personalized AI assistant about their bespoke skill conversion roadmap.
 
 ---
 
 # 4. Literature Survey / Related Work
 
 **Summary of Research:**  
-1. *Contextual AI in Education:* Focuses on using RAG and System prompting to narrow broad foundational models to specialized advisory roles.
-2. *Event-Driven Architectures for AI Data:* Analyzes utilizing message queues and serverless brokers (Inngest/Kafka) to manage asynchronous LLM generation latency without starving web clients.
+1. *Contextual AI in Education:* Focuses on using System prompting to narrow broad foundational models to specialized advisory roles.
+2. *Event-Driven Architectures for AI Data:* Analyzes utilizing message queues and serverless brokers (Inngest) to manage asynchronous computations.
 3. *Automated Resume Parsing & ATS Metrics:* Evaluating traditional regex-based parsers versus modern semantic LLM parsers.
 
 **Existing Tools/Technologies:**  
-- **ChatGPT / Claude via Web:** Highly powerful, but lacks integrated workflows or persistent schema storage for repeated iteration.
-- **Novoresume / Zety:** Exceptional visual builders but missing generative contextualization. Disha merges these paradigms.
+- **ChatGPT / Claude via Web:** Highly powerful, but lacks integrated workflows, persistent databases, or visual progression dashboards for repeated iteration.
+- **Novoresume / Zety:** Exceptional visual builders but missing generative contextualization against specific job descriptions.
 
 ---
 
@@ -78,31 +79,52 @@ Focuses prominently on college students and early-stage professionals aiming for
 
 ```mermaid
 graph TD
-    UI[Client UI - Next.js] -->|Next.js App Router API| SA[Server Actions]
-    SA <-->|Verify Login Session| CL[Clerk Authentication JWT]
-    SA -->|Query / Mutate| PR[Prisma Client]
-    PR <--> DB[(PostgreSQL Database)]
-    SA -->|Stream Inference| VS[Vercel AI SDK]
-    VS -->|llama-3.3-70b-versatile| GR[Groq High-Speed API]
-    SA -.->|Dispatch Events| IN[Inngest Event Broker]
-    IN -->|Cron Workers & Retries| INW[Background Worker Functions]
-    INW -->|Asynchronous Insert| DB
+    subgraph Frontend "Frontend (React 19 / Next.js 15)"
+      UI[Client UI & Dashboards]
+    end
+
+    subgraph Backend "Backend Services"
+      API[Next.js Server Actions]
+      Auth[Clerk Authentication]
+      DB[(PostgreSQL Database)]
+      ORM[Prisma ORM]
+    end
+
+    subgraph AI_Engine "AI Engine"
+      Groq[Groq API - Llama 3]
+    end
+    
+    subgraph Background_Workers "Background Jobs"
+      Inngest[Inngest Worker]
+    end
+
+    UI -->|API Calls & Form Data| API
+    UI -->|SSO| Auth
+    API -->|Prompt & Params| Groq
+    API -->|Read/Write Queries| ORM
+    ORM --> DB
+    API <-->|Trigger Events & Retries| Inngest
+    Inngest -->|Async Data Inserts| ORM
+    
+    style Frontend fill:#E1F5FE,stroke:#01579B,stroke-width:2px,color:#000
+    style Backend fill:#F3E5F5,stroke:#4A148C,stroke-width:2px,color:#000
+    style AI_Engine fill:#E8F5E9,stroke:#1B5E20,stroke-width:2px,color:#000
+    style Background_Workers fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#000
 ```
 
-*(Please commit the rendered version of this mermaid chart as a `.png` for the final repository)*
-
 **Explanation of Architecture:**  
-The application uses Next.js 15 Server Components and Server Actions. Core mutations connect directly to a PostgreSQL database via Prisma ORM. Crucially, the platform decouples synchronous AI operations (like real-time chat/feedback leveraging Vercel AI SDK and Groq) from asynchronous heavy jobs (like weekly industry insight aggregation) which are delegated to Inngest for fault-tolerant execution.
+The application utilizes Next.js 15 Server Components and Server Actions leveraging a React 19 frontend. Core mutations connect securely to a PostgreSQL database via Prisma ORM. Crucially, the platform routes all LLM generations—like realtime Chatbot streaming, Resume Tailoring, or Mock Interviews—to the high-speed Groq API running Llama 3. Asynchronous heavy lifting (like weekly industry insight aggregations) is decoupled and delegated to Inngest for fault-tolerant background execution, deployed fully on Vercel.
 
 ---
 
 # 6. Technologies Used
 
 **Frontend & Framework:**  
-- Next.js 15 (React 19)
+- Next.js 15 (App Router)
+- React 19
 - Tailwind CSS & Shadcn UI
 - Framer Motion (Micro-animations)
-- React Markdown & UIW MD Editor
+- Recharts (for Analytics Dashboard)
 
 **Backend & Data Services:**  
 - Next.js Server Actions (Internal API)
@@ -111,19 +133,22 @@ The application uses Next.js 15 Server Components and Server Actions. Core mutat
 - Clerk (Authentication Provider)
 
 **AI & Background Infrastructure:**  
-- Vercel AI SDK (Unified AI framework wrapper)
-- Groq (`llama-3.3-70b-versatile` - Sub-second LPU inference)
+- Groq API (`llama-3.3-70b-versatile` - Sub-second LPU inference)
 - Inngest (Serverless queues and CRON workflows)
+
+**Deployment:**
+- Vercel (Edge-ready, scalable cloud hosting)
 
 ---
 
 # 7. Methodology / Working
 
 **Step-by-step working of system:**  
-1. **Secure Onboarding:** Clerk manages SSO. Users supply an initial skill vector and target industry on the onboarding screen.
-2. **Data Orchestration:** Upon onboarding, an event is emitted to Inngest. Inngest workers quietly aggregate complex industry data in the background and insert it into Prisma, keeping the UX fluid.
-3. **Resume Formulation:** Utilizing `pdf-parse`, existing resumes can be introspected. Generative AI strictly outputs ATS-compatible metrics mapped to JSON schemas requested via Groq.
-4. **Interview Loop:** When a user initiates testing, the server dynamically prompts the AI to branch difficulty based on previous question performance.
+1. **Secure Onboarding:** Clerk manages SSO. Users supply an initial skill vector and target industry.
+2. **Data Orchestration:** Upon onboarding, Inngest workers quietly aggregate complex industry data in the background and insert it into Prisma, keeping the UX fluid.
+3. **Resume Formulation / Tailoring:** Utilizing `pdf-parse`, existing resumes can be introspected. When users input a target Job Description, the server prompts the Groq API to formulate an ATS score and dynamically tailor a new resume version specifically optimizing for those keywords.
+4. **Interview & Tracking Loop:** When testing initiates, the server dynamically prompts for questions. User responses are saved in PostgreSQL to populate the Analytical Dashboard over time.
+5. **Chatbot Session:** A stateless or memory-backed route queries the Groq API infused with the user's localized database profile, yielding deeply personalized career advice natively in the application.
 
 ---
 
@@ -137,10 +162,12 @@ npm install
 # configure .env variables
 npx prisma generate
 npx prisma db push
-# Terminal 1
+# Terminal 1 - App Server
 npm run dev
 # Terminal 2 - Start Inngest local relayer
 npx inngest-cli@latest dev
+# Terminal 3 - Database Studio GUI
+npx prisma studio
 ```
 
 **Code Structure:**  
@@ -148,32 +175,28 @@ npx inngest-cli@latest dev
 - `/actions` - Server-side RPC methods executing direct database/AI logic.
 - `/components` - Modular visual atoms.
 - `/lib` - Core utility instantiations (Prisma client, Inngest client).
-- `/app/api/inngest` - Hosted Inngest worker endpoint polling for queue jobs.
-
-**Integration details:**  
-By utilizing `@ai-sdk/groq` wrapped within `@ai-sdk/react`, the application seamlessly streams AI responses to the DOM. Inngest natively binds to API routes (`/api/inngest/route.js`) ensuring arbitrary compute scaling for backend insight polling.
+- `/app/api/inngest` - Hosted Inngest worker endpoint for background orchestration.
 
 ---
 
 # 9. Results & Output
 
 **Performance Metrics:**  
-- **Time to First Token (TTFT):** Exceptionally low (< 600ms) by targeting Groq's specialized inference hardware.
-- **Worker Reliability:** Inngest achieves essentially 100% execution guarantees for critical data refreshes with native exponential backoff and retry behavior.
+- **Time to First Token (TTFT):** Exceptionally low (< 600ms) by targeting Groq's Llama 3 models. Perfect for Chatbot reactivity.
+- **Worker Reliability:** Inngest achieves robust execution guarantees for critical data refreshes with native exponential backoff behavior.
 
-*(Insert Screenshots of Output Data / PDF Renders Here)*
+*(Insert Screenshots of Analytical Dashboard / PDF Renders Here)*
 
 ---
 
 # 10. Challenges & Limitations
 
 **Problems faced during development:**  
-- **Context Window Management:** Preventing JSON truncation from LLMs outputting highly detailed mock interview question sets. Modulating system prompt verbosity resolved this.
-- **Stateful Background Jobs:** Initial serverless timeouts occurred when attempting to run heavy insight generation linearly. Refactored architecture to adopt **Inngest** for detached async execution.
+- **Context Window Management:** Parsing large user Resumes combined with extensive Job Descriptions requires careful systemic prompt engineering to avoid truncation.
+- **Stateful Background Jobs:** Initial serverless timeouts occurred on Vercel when attempting to run heavy insight generation synchronously. Refactored architecture to adopt **Inngest** for detached async execution resolves this.
 
 **Limitations of the system:**  
-- Reliance heavily on prompt stability. Undocumented changes in LLM foundational intelligence might alter UI rendering logic if JSON schemas break.
-- Current database implementations rely on relation models which scale well, but highly customized analytics might eventually require OLAP databases.
+- Reliance heavily on prompt stability from Groq. 
 
 ---
 
@@ -181,7 +204,7 @@ By utilizing `@ai-sdk/groq` wrapped within `@ai-sdk/react`, the application seam
 
 **Possible improvements:**  
 - Native WebRTC Voice integrations directly streaming to speech-to-text models for verbal mock interviews.
-- Full text embeddings using pgvector for ultra-precise job description matching.
+- Integrated networking—suggesting open source projects or live peer connections based on similar roadblocks tracked in roadmaps.
 
 **Extensions:**  
 - Constructing a native mobile client via Expo fetching from the shared Next.js Server Components.
@@ -191,24 +214,23 @@ By utilizing `@ai-sdk/groq` wrapped within `@ai-sdk/react`, the application seam
 # 12. Conclusion
 
 **Summary of work:**  
-Disha AI successfully integrates disjointed modern paradigms—high-speed generative AI, robust relational data modeling, and asynchronous event-driven worker tasks—into a single, reliable application.
+Disha AI successfully integrates high-speed generative AI, robust relational tracking, and asynchronous event-driven worker tasks into a single, cohesive user experience aimed at fundamentally solving programmatic career guidance.
 
 **Key learnings:**  
-- Vercel AI SDK drastically normalizes iterating across different LLMs.
-- Adopting Inngest early significantly avoids operational dread associated with managing custom Redis task queues.
-- Combining strong typing (Prisma & TypeScript methodologies) directly into Server Actions virtually eliminates traditional API payload mismatch bugs.
+- The Groq API drastically minimizes perceived latency when implementing chatbot and heavy LLM task workflows compared to standard providers.
+- Adopting Inngest early significantly avoids operational dread associated with managing custom Redis task queues on serverless platforms like Vercel.
 
 ---
 
 # 13. References
 
 **Documentation Links:**  
-- [Vercel AI SDK](https://sdk.vercel.ai/docs)
 - [Inngest Background Jobs](https://www.inngest.com/docs)
 - [Next.js Documentation](https://nextjs.org/docs)
 - [Groq AI Reference](https://console.groq.com/docs/)
 - [Prisma ORM Docs](https://www.prisma.io/docs/)
 - [Clerk Navigation](https://clerk.com/docs)
+- [Vercel Deployment Guide](https://vercel.com/docs)
 
 ---
 
@@ -218,4 +240,4 @@ Disha AI successfully integrates disjointed modern paradigms—high-speed genera
 *(Please insert Youtube / Drive link here)*
 
 **Screenshots or GIFs:**  
-*(Please insert GUI, Inngest Dashboard, and Prisma Studio GIFs here)*
+*(Please insert Visuals of Chatbot, Tailor Feature, and Dashboard here)*
