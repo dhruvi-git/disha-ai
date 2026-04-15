@@ -1,12 +1,13 @@
 # 🚀 Disha AI - Intelligent Career Coach
 
 ![Next.js](https://img.shields.io/badge/Next.js-15-black?style=for-the-badge&logo=next.js)
+![React](https://img.shields.io/badge/React-19-blue?style=for-the-badge&logo=react)
 ![Prisma](https://img.shields.io/badge/Prisma-6-2D3748?style=for-the-badge&logo=prisma)
 ![Inngest](https://img.shields.io/badge/Inngest-Background%20Jobs-E56B4E?style=for-the-badge)
-![Vercel AI SDK](https://img.shields.io/badge/AI%20SDK-Groq-000000?style=for-the-badge)
-![Clerk Auth](https://img.shields.io/badge/Clerk-Auth-6C47FF?style=for-the-badge)
+![Groq](https://img.shields.io/badge/AI-Groq%20API-000000?style=for-the-badge)
+![Vercel](https://img.shields.io/badge/Deployed-Vercel-black?style=for-the-badge&logo=vercel)
 
-Disha AI (formerly SensAI) is a Full-Stack AI-powered career coach designed to help professionals optimize their resumes, prepare for interviews, and explore industry insights. By leveraging the **Vercel AI SDK** with **Groq's Llama 3.3 model**, Disha provides high-performance, tailored, and highly actionable advice. Background automation powered by **Inngest** ensures reliable processing of data-intensive tasks at scale.
+Disha AI is an AI powered career coach which is designed to help students as well as professionals optimize their resumes, prepare for interviews, and explore industry insights. By leveraging the high-speed **Groq API** with the **Llama 3 model**, Disha provides tailored and actionable advice. The platform features an intelligent chatbot, personalized roadmaps, and background automation via **Inngest** to ensure data processing scales effortlessly.
 
 ---
 
@@ -16,14 +17,18 @@ Disha AI (formerly SensAI) is a Full-Stack AI-powered career coach designed to h
 - Provides real-time data on salary ranges, trending skills, and job market trends for your chosen industry.
 - The data is kept consistently updated through **Inngest** background cron jobs.
 
-### 📄 AI-Powered Resume Builder
-- Write, refine, and save ATS-friendly resumes.
+### 📄 AI Resume Tailor & Builder
+- **Resume Tailoring**: Upload your resume, input a target job description, and instantly receive an **ATS Score**, tailored recommendations, and a fully customized resume aligned specifically with that role.
+- Write, refine, and save ATS-friendly base resumes. Auto-formats and exports cleanly to **PDF**.
 - Get AI suggestions to quantify your professional achievements effectively.
-- Auto-formats and exports cleanly to **PDF**.
 
-### 🎤 Dynamic Mock Interviews
-- The application generates adaptive technical and behavioral multiple-choice questions tailored precisely to your registered skill set.
-- Validates answers and delivers detailed AI-driven explanatory feedback on mistakes.
+### 🎤 Interview Progress & Analytics Dashboard
+- **Mock Interviews**: The application generates adaptive technical and behavioral multiple-choice questions tailored to your skills.
+- **Analytical Dashboard**: Visually track your interview progress over time. See how many questions you attempted, your accuracy rates, and pinpoint exact technical areas that need improvement.
+
+### 💬 Personalized Career Chatbot
+- Have a 1-on-1 conversation with the **Disha AI Chatbot**.
+- Ask questions regarding your career roadmap, interview strategies, or general guidance. Responses are deeply personalized based on your individual profile, industry, and skills.
 
 ### ✉️ Smart Cover Letter Generator
 - Instantly constructs tailored cover letters.
@@ -35,25 +40,136 @@ Disha AI (formerly SensAI) is a Full-Stack AI-powered career coach designed to h
 
 | Domain | Technology | Purpose |
 | :--- | :--- | :--- |
-| **Frontend/Backend** | Next.js 15 (App Router) | Full-stack React framework utilizing Server Actions |
-| **Styling & UI** | Tailwind CSS, Shadcn UI | Utility-first CSS and pre-built accessible components |
+| **Frontend/UI** | React 19, Next.js 15 | React framework for robust UI and Server-Side Rendering (App Router) |
+| **Styling** | Tailwind CSS, Shadcn UI | Utility-first CSS and pre-built accessible components |
 | **Authentication** | Clerk | Secure login, signup, and session management |
 | **Database & ORM** | PostgreSQL & Prisma | Relational database modeling and type-safe querying |
-| **AI Engine** | Vercel AI SDK & Groq API | Extremely low-latency inference using `llama-3.3-70b-versatile` |
+| **AI Engine** | Groq API (Llama 3) | Extremely low-latency inference for the chatbot and generation features |
 | **Task Queue** | Inngest | Fault-tolerant event-driven background jobs and CRON tasks |
+| **Deployment** | Vercel | Scalable, zero-configuration cloud hosting |
 
 ---
 
 ## 📐 System Architecture
 
+This architecture outlines how the React client interacts seamlessly with Next.js Server Actions, the database, and the external AI Engine.
+
 ```mermaid
-graph TD;
-    A[Client UI / React] -->|Server Actions| B(Next.js App Router);
-    B -->|Auth Sync| C[Clerk Auth];
-    B -->|CRUD Queries| D[(PostgreSQL via Prisma)];
-    B -->|Streaming Prompts| E[Vercel AI SDK + Groq Llama 3];
-    B <-->|Trigger Events| F{Inngest Worker};
-    F -->|Background Processing| D;
+graph TD
+    subgraph Frontend "Frontend (React / Next.js)"
+      UI[Client UI & Dashboard]
+    end
+
+    subgraph Backend "Backend Services"
+      API[Next.js Server Actions]
+      Auth[Clerk Authentication]
+      DB[(PostgreSQL Database)]
+      ORM[Prisma ORM]
+    end
+
+    subgraph AI_Engine "AI Engine"
+      Groq[Groq API - Llama 3]
+    end
+    
+    subgraph Background_Workers "Background Jobs"
+      Inngest[Inngest Worker]
+    end
+
+    UI -->|API Calls & Forms| API
+    UI -->|SSO| Auth
+    API -->|Prompt & Profiles| Groq
+    API -->|Read/Write Queries| ORM
+    ORM --> DB
+    API <-->|Trigger Events & Retries| Inngest
+    Inngest -->|Async Data Inserts| ORM
+    
+    style Frontend fill:#E1F5FE,stroke:#01579B,stroke-width:2px,color:#000
+    style Backend fill:#F3E5F5,stroke:#4A148C,stroke-width:2px,color:#000
+    style AI_Engine fill:#E8F5E9,stroke:#1B5E20,stroke-width:2px,color:#000
+    style Background_Workers fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#000
+```
+
+---
+
+## 🗄️ Database Design
+
+The application's relational data model ensuring data integrity across user records, assessments, generated documents, and background industry insights. 
+
+```mermaid
+erDiagram
+    User {
+        String id PK
+        String clerkUserId UK
+        String email UK
+        String name
+        String imageUrl
+        String industry FK
+        String bio
+        Int experience
+        String[] skills
+        DateTime createdAt
+        DateTime updatedAt
+    }
+    Assessment {
+        String id PK
+        String userId FK
+        Float quizScore
+        Json[] questions
+        String category
+        String improvementTip
+        DateTime createdAt
+        DateTime updatedAt
+    }
+    Resume {
+        String id PK
+        String userId FK
+        String content
+        Float atsScore
+        String feedback
+        DateTime createdAt
+        DateTime updatedAt
+    }
+    CoverLetter {
+        String id PK
+        String userId FK
+        String content
+        String jobDescription
+        String companyName
+        String jobTitle
+        String status
+        DateTime createdAt
+        DateTime updatedAt
+    }
+    IndustryInsight {
+        String id PK
+        String industry UK
+        Json[] salaryRanges
+        Float growthRate
+        String demandLevel
+        String[] topSkills
+        String marketOutlook
+        String[] keyTrends
+        String[] recommendedSkills
+        DateTime lastUpdated
+        DateTime nextUpdate
+    }
+    RoadmapItem {
+        String id PK
+        String userId FK
+        String title
+        String description
+        String link
+        String status
+        Int progress
+        DateTime createdAt
+        DateTime updatedAt
+    }
+
+    User ||--o{ Assessment : "completes"
+    User ||--o{ CoverLetter : "generates"
+    User ||--o| Resume : "manages"
+    User ||--o{ RoadmapItem : "tracks"
+    IndustryInsight ||--o{ User : "associates to"
 ```
 
 ---
@@ -62,7 +178,7 @@ graph TD;
 
 ### Prerequisites
 - Node.js (v18+)
-- Local PostgreSQL server installed and running (or use a cloud provider like Neon.tech/Supabase)
+- Local PostgreSQL server installed and running
 - API Keys for Clerk, Groq, and (optionally) Inngest.
 
 ### 1. Clone & Install
@@ -80,7 +196,7 @@ Create a `.env` file in the root directory:
 DATABASE_URL="postgresql://<username>:<password>@localhost:5432/<your_database>"
 
 # Groq AI
-GROQ_API_KEY="your_groq_api_key_here"
+GROQ_API_KEY="your_groq_api_key"
 
 # Clerk Authentication
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY="your_clerk_publishable_key"
@@ -92,38 +208,35 @@ NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/onboarding
 ```
 
 ### 3. Initialize the Database
-Push the Prisma schema to your target PostgreSQL database:
+Push the Prisma schema to your local database instance:
 ```bash
 npx prisma generate
 npx prisma db push
 ```
 
 ### 4. Run the Dev Servers
-You will need to run both the Next.js app and the Inngest Dev Server to test background functionality.
-
-**Terminal 1 (Next.js):**
+**Terminal 1 (Next.js Application):**
 ```bash
 npm run dev
 ```
 
-**Terminal 2 (Inngest):**
+**Terminal 2 (Inngest Worker):**
+To ensure background features operate dynamically:
 ```bash
 npx inngest-cli@latest dev
 ```
 
-The main application will be available at [http://localhost:3000](http://localhost:3000). The Inngest dashboard will be available at [http://localhost:8288](http://localhost:8288).
+The application is now hosted locally at [http://localhost:3000](http://localhost:3000).
 
 ---
 
-## 🗄️ Viewing the Database
+## 🔍 Viewing the Database
 
-To inspect your database schemas, tables, and raw entries cleanly, Disha AI utilizes **Prisma Studio**, a visual database browser.
-
-Open a terminal in the project directory and run:
+Disha AI uses **Prisma Studio**, a convenient GUI to view your tables, manage records, and inspect entries:
 ```bash
 npx prisma studio
 ```
-This command will open `http://localhost:5555` in your browser, where you can safely perform CRUD operations straight from a GUI.
+This will launch at `http://localhost:5555`, allowing you to visually explore the schema.
 
 ---
 
