@@ -11,6 +11,18 @@ Disha AI is an AI-powered career coach designed to help students and professiona
 
 ---
 
+## 📸 Screenshots
+
+**Landing Page**
+
+![Hero](./screenshots/hero.png)
+
+![Features](./screenshots/features.png)
+
+![CTA](./screenshots/cta.png)
+
+---
+
 ## ✨ Features
 
 ### 📊 Industry Insights & Analytics
@@ -18,8 +30,8 @@ Real-time data on salary ranges, trending skills, and job market trends for your
 
 ### 📄 AI Resume Tailor & Builder
 - **Resume Tailoring** — Upload your resume, input a target job description, and instantly receive an **ATS Score**, tailored recommendations, and a fully customized resume aligned with that role.
-- Write, refine, and save ATS-friendly base resumes. Auto-formats and exports cleanly to **PDF**.
-- Get AI suggestions to quantify your professional achievements effectively.
+- **Write, refine, and save** ATS-friendly base resumes. Auto-formats and exports cleanly to **PDF**.
+- Get **AI suggestions** to quantify your professional achievements effectively.
 
 ### 🎤 Interview Progress & Analytics Dashboard
 - **Mock Interviews** — Adaptive technical and behavioral multiple-choice questions tailored to your skills.
@@ -169,7 +181,6 @@ erDiagram
 ```
 
 ---
-
 
 ## 🚀 Getting Started Locally
 
