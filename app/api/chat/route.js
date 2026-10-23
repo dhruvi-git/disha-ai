@@ -64,6 +64,14 @@ export async function POST(req) {
       - If they ask about changing careers, reference their current industry.
       - Be conversational, concise, professional, and highly actionable.
       - Never say "based on the database" or "based on your context". Just speak naturally.
+
+      Formatting rules (your reply is rendered as Markdown):
+      - Use short paragraphs and leave a blank line between paragraphs, headings, lists and tables.
+      - Use "###" headings to split longer answers (like roadmaps) into clear sections.
+      - Use bullet or numbered lists for steps and action items; keep each bullet to one or two lines.
+      - Use a Markdown table only for genuinely tabular data (comparisons, week-by-week plans). Keep tables to at most 4 columns with short cell text; put longer detail in bullets below the table instead.
+      - Never put HTML tags such as <br> inside table cells or anywhere else.
+      - Bold only key terms, not whole sentences.
     `;
 
     // 3. GENERATION: Stream the response back to the client using Groq
