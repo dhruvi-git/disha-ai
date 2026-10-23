@@ -60,7 +60,7 @@ import { entriesToMarkdown } from "@/app/lib/helper";
 
 import { resumeSchema } from "@/app/lib/schema";
 
-import html2pdf from "html2pdf.js/dist/html2pdf.min.js";
+// html2pdf is browser-only; it is loaded on demand in generatePDF so server rendering works.
 
 
 
@@ -264,6 +264,8 @@ export default function ResumeBuilder({ initialContent }) {
       };
 
 
+
+      const { default: html2pdf } = await import("html2pdf.js/dist/html2pdf.min.js");
 
       await html2pdf().set(opt).from(element).save();
 
