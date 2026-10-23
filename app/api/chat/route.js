@@ -68,7 +68,7 @@ export async function POST(req) {
 
     // 3. GENERATION: Stream the response back to the client using Groq
     const result = streamText({
-      model: groq('llama-3.1-8b-instant'), // Groq's lightning-fast Llama 3.1 model
+      model: groq('openai/gpt-oss-20b'), // Groq gpt-oss-20b (Llama 3.1 8B retired Aug 2026)
       system: systemPrompt,
       messages: modelMessages,
     });
