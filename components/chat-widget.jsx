@@ -11,7 +11,7 @@ export default function ChatWidget() {
   const pathname = usePathname();
 
   // Hide the widget if we are already on the chat page to avoid redundancy
-  if (pathname === "/chat") return null;
+  if (pathname?.startsWith("/chat")) return null;
 
   return (
     <motion.div
